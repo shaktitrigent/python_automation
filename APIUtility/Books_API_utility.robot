@@ -84,8 +84,8 @@ Get all books details
 Get only fiction books
     [Tags]      API
     [Documentation]     This keyword is used to get details of only fiction books
-    ${limit}    get_books_limit
-    &{req_body}=     Create Dictionary       type=fiction    limit=${limit}
+    ${fiction_limit}    get_books_limit
+    &{req_body}=     Create Dictionary       type=fiction    limit=${fiction_limit}
     &{header}=      Create Dictionary       Content-Type=application/json
     ${response}=  Get On Session    url     books   params=${req_body}   headers=${header}
     log     ${response.status_code}
@@ -93,4 +93,17 @@ Get only fiction books
     Should be equal as strings  ${response.status_code}   200
     should contain      '${response.content}'   fiction
     should not contain   '${response.content}'  non-fiction
+    log to console   ${response.json()}
+
+Get only non-fiction books
+    [Tags]      API
+    [Documentation]     This keyword is used to get details of only non-fiction books
+    ${non_fiction_limit}    get_books_limit
+    &{req_body}=     Create Dictionary       type=non-fiction    limit=${non_fiction_limit}
+    &{header}=      Create Dictionary       Content-Type=application/json
+    ${response}=  Get On Session    url     books   params=${req_body}   headers=${header}
+    log     ${response.status_code}
+    Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,got ${response.status_code} for Get all books details
+    Should be equal as strings  ${response.status_code}   200
+    should contain   '${response.content}'  non-fiction
     log to console   ${response.json()}

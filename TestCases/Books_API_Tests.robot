@@ -25,6 +25,11 @@ list of only fiction books
     [Tags]     Regression  smoke
     Get only fiction books
 
+list of only non-fiction books
+    [Documentation]  This Keyword is used to get details of only non-fiction books
+    [Tags]     Regression  smoke
+    Get only non-fiction books
+
 
 
 *** Keywords ***

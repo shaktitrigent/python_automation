@@ -39,5 +39,9 @@ def get_user_name():
     return user_name
 
 def get_books_limit():
+    """
+    It generates limitation number for a book as per the user input
+    :return: limitation number
+    """
     number = int(input("enter the limitation: "))
     return number
