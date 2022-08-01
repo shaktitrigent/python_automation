@@ -37,3 +37,7 @@ def get_user_name():
     """
     user_name = input("enter the user name: ")
     return user_name
+
+def get_books_limit():
+    number = int(input("enter the limitation: "))
+    return number

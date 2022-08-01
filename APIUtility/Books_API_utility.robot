@@ -23,7 +23,6 @@ Bearer Token Authentication
     log     ${token}
     set suite variable      ${token}
 
-
 Ordering the required book
     [Documentation]    This keyword contain user input name and user input bookId
 ...                     By using inputs we can order the books, some books are out of stock if
@@ -70,3 +69,28 @@ Create Book order
 
     END
 
+Get all books details
+    [Tags]      API
+    [Documentation]     This keyword is used to get details of all the books
+    &{header}=      Create Dictionary       Content-Type=application/json
+    ${response}=  Get On Session    url     books   headers=${header}
+    log     ${response.status_code}
+    log  ${response.json()}
+    Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,got ${response.status_code} for Get all books details
+    Should be equal as strings  ${response.status_code}   200
+    should contain  '${response.json()}'    id
+    should contain  '${response.json()}'    name
+
+Get only fiction books
+    [Tags]      API
+    [Documentation]     This keyword is used to get details of only fiction books
+    ${limit}    get_books_limit
+    &{req_body}=     Create Dictionary       type=fiction    limit=${limit}
+    &{header}=      Create Dictionary       Content-Type=application/json
+    ${response}=  Get On Session    url     books   params=${req_body}   headers=${header}
+    log     ${response.status_code}
+    Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,got ${response.status_code} for Get all books details
+    Should be equal as strings  ${response.status_code}   200
+    should contain      '${response.content}'   fiction
+    should not contain   '${response.content}'  non-fiction
+    log to console   ${response.json()}

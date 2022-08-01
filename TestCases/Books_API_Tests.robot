@@ -15,7 +15,15 @@ Create Book order
     [Tags]      Regression
     Create Book order
 
+list all books
+    [Documentation]  This Keyword is used to get details of all the books
+    [Tags]      Regression  smoke
+    Get all books details
 
+list of only fiction books
+    [Documentation]  This Keyword is used to get details of only fiction books
+    [Tags]     Regression  smoke
+    Get only fiction books
 
 
 
