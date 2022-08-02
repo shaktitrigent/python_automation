@@ -107,3 +107,34 @@ Get only non-fiction books
     Should be equal as strings  ${response.status_code}   200
     should contain   '${response.content}'  non-fiction
     log to console   ${response.json()}
+
+Required book
+    [Documentation]  This keyword is used for  getting a specific book
+    ${Book_Id}  get_single_book_id
+    &{header}   create dictionary  Content-Type=application/json; charset=utf-8
+    ${response}     GET On Session    url    /books/${Book_Id}  headers=${header}
+    log   ${response.status_code}
+    log to console  ${response.json()}
+
+    IF  ${Book_Id}>0 and ${Book_Id}<7
+        log to console  Book details found
+    END
+
+    should be equal as strings   ${response.status_code}   200
+    should contain  ${response.json()}  type
+    should contain  ${response.json()}  id
+    should contain  ${response.json()}  name
+    should contain  ${response.json()}  available
+    should contain  ${response.json()}  author
+    should contain  ${response.json()}  price
+    should contain  ${response.json()}  current-stock
+
+Getting a required book
+        [Documentation]  This keyword logs the perticular book details
+...        if 'Getting a required book' keyword fails it will give a certain message
+
+        TRY
+            Required book
+        EXCEPT
+            log to console  Enter a valid Book Id
+        END

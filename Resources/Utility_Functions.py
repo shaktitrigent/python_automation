@@ -2,7 +2,6 @@ import random
 import urllib3
 urllib3.disable_warnings()
 
-
 def get_random_number(start, end):
     """
     It generates random number in a given range.
@@ -19,7 +18,6 @@ def get_random_emailID():
     """
     email_id = get_random_number(0, 122222)
     return "Postman" + str(email_id) + "@gmail.com"
-
 
 def get_user_id():
     """
@@ -45,3 +43,11 @@ def get_books_limit():
     """
     number = int(input("enter the limitation: "))
     return number
+
+def get_single_book_id():
+    """
+    This function gives the specific book id
+    :return: specific book id
+    """
+    specific_book_id = int(input("Enter a book Id: "))
+    return specific_book_id

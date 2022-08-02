@@ -1,5 +1,7 @@
 *** Settings ***
+
 Resource    ../Library/CommonResources.robot
+
 Suite Setup    Initial Setup
 
 *** Variables ***
@@ -30,7 +32,10 @@ list of only non-fiction books
     [Tags]     Regression  smoke
     Get only non-fiction books
 
-
+Specific book details
+    [Documentation]  This keyword retrieves the detailed information about a book.
+    [Tags]  Smoke Regression
+    Getting a required book
 
 *** Keywords ***
 Initial Setup
