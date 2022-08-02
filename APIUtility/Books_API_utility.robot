@@ -59,7 +59,7 @@ Ordering the required book
 
      # Validation of Content-Type of headers using get from dictionary metthod
      ${headers_validation}      Get from Dictionary     ${response.headers}     Content-Type
-     should be equal    ${headers_validation}      application/json; charset=utf-
+     should be equal    ${headers_validation}      application/json; charset=utf-8
 
 
 Create Book order
