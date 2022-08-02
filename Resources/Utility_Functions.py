@@ -1,18 +1,39 @@
 import random
+import urllib3
+urllib3.disable_warnings()
 
 
-def get_random_number():
+def get_random_number(start, end):
     """
     It generates random number in a given range.
     :return: Random number
     """
-    number = random.randint(0, 11111)
+    number = random.randint(start, end)
     return number
+
 
 def get_random_emailID():
     """
     It generates random emailID
     :return: Random emailID
     """
-    email_id = get_random_number()
+    email_id = get_random_number(0, 122222)
     return "Postman" + str(email_id) + "@gmail.com"
+
+
+def get_user_id():
+    """
+    It generates random bookID
+    :return: random bookID
+    """
+    book_number = int(input("enter the bookId: "))
+    return book_number
+
+
+def get_user_name():
+    """
+    Create userName using the input methods
+    :return: username
+    """
+    user_name = input("enter the user name: ")
+    return user_name

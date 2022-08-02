@@ -10,6 +10,15 @@ To get Access_Token
     [Tags]      Smoke
     Bearer Token Authentication
 
+Create Book order
+    [Documentation]     This keyword is used for ordering book and shows orderId
+    [Tags]      Regression
+    Create Book order
+
+
+
+
+
 *** Keywords ***
 Initial Setup
     start session
