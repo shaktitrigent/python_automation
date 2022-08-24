@@ -52,6 +52,11 @@ Details of specific order
     [Tags]  Regression
     Get a single or specific order
 
+Modyfying ordered details
+    [Documentation]  this keyword logs the updated order details.
+    [Tags]  Smoke Regression
+    Update an order
+
 delete the given BookId
     [Documentation]  This Testcase is used for deleting the ordered book details
     [Tags]     sanity   Regression
@@ -61,11 +66,6 @@ checking the order deleted or not
     [Documentation]  This TestCase used to check whether order is delete
     [Tags]      Smoke   Regression
     checking the order deleted or not
-
-Modyfying ordered details
-    [Documentation]  this keyword logs the updated order details.
-    [Tags]  Smoke Regression
-    Update an order
 
 *** Keywords ***
 Initial Setup
