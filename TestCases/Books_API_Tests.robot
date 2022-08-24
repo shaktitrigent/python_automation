@@ -52,6 +52,11 @@ Details of specific order
     [Tags]  Regression
     Get a single or specific order
 
+delete the given BookId
+    [Documentation]  This Testcase is used for deleting the ordered book details
+    [Tags]     sanity   Regrassion
+    Delete an order
+
 *** Keywords ***
 Initial Setup
     start session

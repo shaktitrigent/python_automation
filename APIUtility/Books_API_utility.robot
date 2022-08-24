@@ -46,9 +46,8 @@ Ordering the required book
     # creating the dictionary
      &{req_body}=   Create Dictionary   bookId=${bookId}    clientName=${User_name}
      &{header}=     Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
-
      # Making post request
-     ${response}    POST on session     url     orders      json=${req_body}    headers=${header}
+     ${response}    POST on Session      url     orders      json=${req_body}    headers=${header}
      log      ${response.json()}
 
      #convert to string to status code
@@ -60,6 +59,10 @@ Ordering the required book
      ${headers_validation}      Get from Dictionary     ${response.headers}     Content-Type
      should be equal    ${headers_validation}      application/json; charset=utf-8
 
+     # Here we created the suite variable for accessing the OrderId
+     ${order_ID}       get from Dictionary     ${response.json()}    orderId
+     set suite variable     ${order_ID}
+     log to console     ${order_ID}
 
 Create Book order
     TRY
@@ -68,7 +71,7 @@ Create Book order
        log to console   ${BookId}
 
     END
-#
+
 Get all books details
     [Tags]      API
     [Documentation]     This keyword is used to get details of all the books
@@ -208,3 +211,19 @@ Get a single or specific order
     ${list_values}  get from list   ${values}   ${list_index}
     log to console  ${list_values}
     should be equal as strings   ${response.json()}[bookId]     ${list_values}[id]
+
+Delete an order
+    [Documentation]  this keyword used to deleting the user ordered book
+    [Tags]   API
+
+    # Making DELETE request
+    &{header}=     Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}    DELETE on session     url     orders/${order_ID}       headers=${header}
+
+     # Validation of Content-Type of headers using get from dictionary metthod
+    ${headers_validation}      Get from Dictionary     ${response.headers}     Connection
+    should be equal    ${headers_validation}      keep-alive
+    log     ${response.headers}
+
+    # Validating the status code
+    should be equal as strings   ${response.status_code}   204
