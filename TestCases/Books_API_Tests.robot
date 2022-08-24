@@ -37,6 +37,11 @@ Specific book details
     [Tags]  Smoke Regression
     Getting a required book
 
+New Book
+    [Documentation]     This keyword is used to order a new book
+    [Tags]      Regression  smoke
+    Create New Book_Order
+
 *** Keywords ***
 Initial Setup
     start session
