@@ -55,7 +55,6 @@ def get_user_id():
     book_number = int(input("enter the bookId: "))
     return book_number
 
-
 def get_user_name():
     """
     Create userName using the input methods
@@ -82,25 +81,6 @@ def get_single_book_id():
     specific_book_id = int(input("Enter a book Id: "))
     return specific_book_id
 
-
-def google_sheets():
-    """
-    This keyword is used to get the GoogleSheets data from the  spreadsheets
-    :return: It returns the list of dictionaries
-    """
-    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets",
-             "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
-
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        "C:/Users/sunil_n/PycharmProjects/python-automation-robot/python_automation/creds.json", scope)
-
-    client = gspread.authorize(creds)
-    sheet = client.open("TestAutomationData")
-    worksheet = sheet.sheet1
-    values = worksheet.get_all_records()
-    return values
-
-
 def get_data():
     """
      This function is used to get the specific value of bookId
@@ -109,3 +89,11 @@ def get_data():
     """
     data = get_user_id() - 1
     return data
+def update_name():
+    """
+    This function gives user input name, i.e., updated name for the
+    purpose for updating an order
+    :return:
+    """
+    customer_name_updated = input("Enter the customer name: ")
+    return customer_name_updated
