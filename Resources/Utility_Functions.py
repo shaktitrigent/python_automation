@@ -55,7 +55,6 @@ def get_user_id():
     book_number = int(input("enter the bookId: "))
     return book_number
 
-
 def get_user_name():
     """
     Create userName using the input methods
@@ -82,7 +81,6 @@ def get_single_book_id():
     specific_book_id = int(input("Enter a book Id: "))
     return specific_book_id
 
-
 def get_data():
     """
      This function is used to get the specific value of bookId
@@ -91,7 +89,6 @@ def get_data():
     """
     data = get_user_id() - 1
     return data
-
 
 def update_name():
     """

@@ -84,6 +84,7 @@ Get all books details
 
     # Getting the google sheets data using python function and validating the response data
     ${googlesheets}     get_googlesheets_data
+    set suite variable  ${googlesheets}
     log    ${response.status_code}
     Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,
 ...                                                 got ${response.status_code} for Get all books details
@@ -128,20 +129,14 @@ Required book
     &{header}   create dictionary  Content-Type=application/json; charset=utf-8
     ${response}     GET On Session    url    /books/${Book_Id}  headers=${header}
     log   ${response.status_code}
-    log to console  ${response.json()}
+    log   ${response.json()}
 
     IF  ${Book_Id}>0 and ${Book_Id}<7
         log to console  Book details found
     END
 
     should be equal as strings   ${response.status_code}   200
-    should contain  ${response.json()}  type
-    should contain  ${response.json()}  id
-    should contain  ${response.json()}  name
-    should contain  ${response.json()}  available
-    should contain  ${response.json()}  author
-    should contain  ${response.json()}  price
-    should contain  ${response.json()}  current-stock
+    should not be equal as strings    ${response.json()}[bookId]      ${googlesheets}[3]
 
 Getting a required book
         [Documentation]  This keyword logs the particular book details
@@ -159,9 +154,8 @@ Get All ordered books details
 
     &{header}   Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
     ${response}    GET on session    url    orders      headers=${header}
-    log to console      ${response}
-    log to console      ${response.json()}
-    log    ${response.status_code}
+    log   ${response.json()}
+    log   ${response.status_code}
 
     should be equal as strings   ${response.status_code}    200
     should contain     '${response.status_code}'      20     Test Failed: Expected Response 200,
@@ -171,19 +165,17 @@ Get a single or specific order
     [Documentation]  This keyword is used to get details of specific order
     [Tags]      API
     @{values}   get_googlesheets_data
-    log to console  ${values}
+    log  ${values}
     ${list_index}   get_data
     &{header}   Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
     ${response}     Get on session      url     orders/${order_ID}    headers=${header}
-    log to console      ${response}
-    log to console       ${response.json()}
-    log to console      ${response.status_code}
+    log   ${response.json()}
+    log   ${response.status_code}
     should be equal as integers      ${response.status_code}     200
     should contain      '${response.status_code}'   20    Test Failed: Expected Response 200,
     ...                                            got ${response.status_code} for get a single or specific order
 
     ${list_values}  get from list   ${values}   ${list_index}
-    log to console  ${list_values}
     should be equal as strings   ${response.json()}[bookId]     ${list_values}[id]
 
 Update an order
@@ -194,8 +186,19 @@ Update an order
     ${response}     PATCH On Session   url   /orders/${orderId}     json=${req_body}    headers=${header}
     log   ${response}
 
-#    validations
+    # validations
     should be equal as strings   ${response.status_code}   204
+
+Check whether the order is updated or not
+    [Documentation]  This keyword verifies order is updated or not
+    &{header}   create dictionary   Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}   GET On Session  url   /orders/${orderId}        headers=${header}
+    log  ${response.json()}
+    log  ${response.status_code}
+
+#    validations
+    should be equal as integers  ${response.status_code}    200
+    should not be equal as strings    ${response.json()}[bookId]        ${googlesheets}[3]
 
 Delete an order
     [Documentation]  this keyword used to deleting the user ordered book
@@ -229,19 +232,3 @@ checking the order deleted or not
 
     # Validating the status_code
     should be equal as strings   ${response.status_code}   200
-
-Check whether the order is updated or not
-    [Documentation]  This keyword verifies order is updated or not
-    &{header}   create dictionary   Content-Type=application/json   Authorization=Bearer ${token}
-    ${response}   GET On Session  url   /orders/${orderId}        headers=${header}
-    log  ${response.json()}
-    log  ${response.status_code}
-
-#    validations
-    should be equal as integers  ${response.status_code}    200
-    should contain  ${response.json()}  createdBy
-    should contain  ${response.json()}  id
-    should contain  ${response.json()}  bookId
-    should contain  ${response.json()}  customerName
-    should contain  ${response.json()}  quantity
-    should contain  ${response.json()}  timestamp

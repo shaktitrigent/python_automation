@@ -57,6 +57,11 @@ Modyfying ordered details
     [Tags]  Smoke Regression
     Update an order
 
+Getting deatails of an updated order
+    [Documentation]  this keyword gives the informatrion of updated order
+    [Tags]  Smoke Regression
+    Check whether the order is updated or not
+
 delete the given BookId
     [Documentation]  This Testcase is used for deleting the ordered book details
     [Tags]     sanity   Regression
@@ -66,12 +71,6 @@ checking the order deleted or not
     [Documentation]  This TestCase used to check whether order is delete
     [Tags]      Smoke   Regression
     checking the order deleted or not
-
-Getting deatails of an updated order
-    [Documentation]  this keyword gives the informatrion of updated order
-    [Tags]  Smoke Regression
-    Check whether the order is updated or not
-
 
 *** Keywords ***
 Initial Setup
