@@ -54,7 +54,6 @@ Details of specific order
 
 delete the given BookId
     [Documentation]  This Testcase is used for deleting the ordered book details
-
     [Tags]     sanity   Regression
     Delete an order
 
@@ -63,8 +62,6 @@ checking the order deleted or not
     [Tags]      Smoke   Regression
     checking the order deleted or not
 
-    [Tags]     sanity   Regrassion
-    Delete an order
 
 *** Keywords ***
 Initial Setup
