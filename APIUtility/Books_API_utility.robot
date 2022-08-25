@@ -79,7 +79,8 @@ Get all books details
     ${response}=  Get On Session    url     books   headers=${header}
     log     ${response.status_code}
     log  ${response.json()}
-    Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,got ${response.status_code} for Get all books details
+    Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,
+...                                                 got ${response.status_code} for Get all books details
     Should be equal as strings  ${response.status_code}   200
     should contain  '${response.json()}'    id
     should contain  '${response.json()}'    name
@@ -92,7 +93,8 @@ Get only fiction books
     &{header}=      Create Dictionary       Content-Type=application/json
     ${response}=  Get On Session    url     books   params=${req_body}   headers=${header}
     log     ${response.status_code}
-    Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,got ${response.status_code} for Get all books details
+    Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,
+...                                                  ${response.status_code} for Get all books details
     Should be equal as strings  ${response.status_code}   200
     should contain      '${response.content}'   fiction
     should not contain   '${response.content}'  non-fiction
@@ -106,7 +108,8 @@ Get only non-fiction books
     &{header}=      Create Dictionary       Content-Type=application/json
     ${response}=  Get On Session    url     books   params=${req_body}   headers=${header}
     log     ${response.status_code}
-    Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,got ${response.status_code} for Get all books details
+    Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,
+...                                                  got ${response.status_code} for Get all books details
     Should be equal as strings  ${response.status_code}   200
     should contain   '${response.content}'  non-fiction
     log    ${response.json()}
@@ -190,3 +193,23 @@ Delete an order
 
     # Validating the status code
     should be equal as strings   ${response.status_code}   204
+
+checking the order deleted or not
+
+    [Documentation]     In this keyword is returns and validate  the ordered book is delete or not
+...                    And also, It returns the empty body
+    [Tags]      API
+
+    # Making the GET request and checking the deleted order
+    &{header}=     Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}     GET on session      url     orders      headers=${header}
+    log to console      ${response.json()}
+
+    # Validating the headers content
+    ${validation}      Get from Dictionary     ${response.headers}     Content-Length
+    should be equal     ${validation}       2
+    ${headers_validation}      Get from Dictionary     ${response.headers}     Connection
+    should be equal    ${headers_validation}      keep-alive
+
+    # Validating the status_code
+    should be equal as strings   ${response.status_code}   200
