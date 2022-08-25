@@ -68,7 +68,7 @@ Create Book order
        log to console   ${BookId}
 
     END
-
+#
 Get all books details
     [Tags]      API
     [Documentation]     This keyword is used to get details of all the books
@@ -160,9 +160,9 @@ Ordering New Book
     ${response}     POST on session     url     orders      json=${req_body}    headers=${header}
     log     ${response.json()}
 
-    ${OrderId}      get from dictionary     ${response.json()}    orderId
-    log     ${OrderId}
-    set suite variable      ${OrderId}
+    ${Order_ID}      get from dictionary     ${response.json()}    orderId
+    log     ${Order_ID}
+    set suite variable      ${Order_ID}
 
     should be equal as strings      ${response.status_code}     201
     should contain      '${response.status_code}'   20  Fail    Test Failed:Expected Response 201, got  for Ordering New Book
@@ -175,3 +175,17 @@ Create New Book_Order
         log to console      ${New_Book_Id}
 
     END
+
+Get All ordered books details
+    [Documentation]     This keyword is used to get details of all the ordered books
+    [Tags]      API
+
+    &{header}   Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}    GET on session    url    orders      headers=${header}
+    log to console      ${response}
+    log to console      ${response.json()}
+    log    ${response.status_code}
+
+    should be equal as strings   ${response.status_code}    200
+    should contain     '${response.status_code}'      20     Test Failed: Expected Response 200,
+...                                                  got ${response.status_code} for Get All ordered books details
