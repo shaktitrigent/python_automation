@@ -206,6 +206,8 @@ checking the order deleted or not
     log to console      ${response.json()}
 
     # Validating the headers content
+    ${validation}      Get from Dictionary     ${response.headers}     Content-Length
+    should be equal     ${validation}       2
     ${headers_validation}      Get from Dictionary     ${response.headers}     Connection
     should be equal    ${headers_validation}      keep-alive
 

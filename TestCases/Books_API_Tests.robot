@@ -62,7 +62,6 @@ checking the order deleted or not
     [Tags]      Smoke   Regression
     checking the order deleted or not
 
-
 *** Keywords ***
 Initial Setup
     start session
