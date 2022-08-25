@@ -67,6 +67,12 @@ checking the order deleted or not
     [Tags]      Smoke   Regression
     checking the order deleted or not
 
+Getting deatails of an updated order
+    [Documentation]  this keyword gives the informatrion of updated order
+    [Tags]  Smoke Regression
+    Check whether the order is updated or not
+
+
 *** Keywords ***
 Initial Setup
     start session

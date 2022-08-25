@@ -230,3 +230,18 @@ checking the order deleted or not
     # Validating the status_code
     should be equal as strings   ${response.status_code}   200
 
+Check whether the order is updated or not
+    [Documentation]  This keyword verifies order is updated or not
+    &{header}   create dictionary   Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}   GET On Session  url   /orders/${orderId}        headers=${header}
+    log  ${response.json()}
+    log  ${response.status_code}
+
+#    validations
+    should be equal as integers  ${response.status_code}    200
+    should contain  ${response.json()}  createdBy
+    should contain  ${response.json()}  id
+    should contain  ${response.json()}  bookId
+    should contain  ${response.json()}  customerName
+    should contain  ${response.json()}  quantity
+    should contain  ${response.json()}  timestamp
