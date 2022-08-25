@@ -196,7 +196,7 @@ Check whether the order is updated or not
     log  ${response.json()}
     log  ${response.status_code}
 
-#    validations
+    # validations
     should be equal as integers  ${response.status_code}    200
     should not be equal as strings    ${response.json()}[bookId]        ${googlesheets}[3]
 
