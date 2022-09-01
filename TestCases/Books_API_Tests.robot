@@ -16,7 +16,7 @@ Create Book order
     [Documentation]     This keyword is used for ordering book and shows orderId
     [Tags]      Regression
     Create Book order
-#
+
 list all books
     [Documentation]  This Keyword is used to get details of all the books
     [Tags]      Regression  smoke
@@ -43,9 +43,14 @@ New Book order
     Create New Book_Order
 
 Details of orders
-    [Documentation]     This keyword to used to get details of all the ordered books
+    [Documentation]     This keyword is used to get details of all the ordered books
     [Tags]      Regression
     Get All ordered books details
+
+Details of specific order
+    [Documentation]     This keyword is used to get details of a specific order
+    [Tags]  Regression
+    Get a single or specific order
 
 *** Keywords ***
 Initial Setup

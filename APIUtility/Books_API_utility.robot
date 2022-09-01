@@ -188,4 +188,23 @@ Get All ordered books details
 
     should be equal as strings   ${response.status_code}    200
     should contain     '${response.status_code}'      20     Test Failed: Expected Response 200,
-...                                                  got ${response.status_code} for Get All ordered books details
+...                                                  got ${response.status_code} for get All ordered books details
+
+Get a single or specific order
+    [Documentation]  This keyword is used to get details of specific order
+    [Tags]      API
+    @{values}   google_sheets
+    log to console  ${values}
+    ${list_index}   get_data
+    &{header}   Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}     Get on session      url     orders/${Order_ID}     headers=${header}
+    log to console      ${response}
+    log to console       ${response.json()}
+    log to console      ${response.status_code}
+    should be equal as integers      ${response.status_code}     200
+    should contain      '${response.status_code}'   20    Test Failed: Expected Response 200,
+    ...                                            got ${response.status_code} for get a single or specific order
+
+    ${list_values}  get from list   ${values}   ${list_index}
+    log to console  ${list_values}
+    should be equal as strings   ${response.json()}[bookId]     ${list_values}[id]
