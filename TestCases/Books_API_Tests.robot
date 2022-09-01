@@ -34,7 +34,7 @@ list of only non-fiction books
 
 Specific book details
     [Documentation]  This keyword retrieves the detailed information about a book.
-    [Tags]  Smoke Regression
+    [Tags]  Smoke    Regression
     Getting a required book
 
 New Book order
