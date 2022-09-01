@@ -37,10 +37,20 @@ Specific book details
     [Tags]  Smoke Regression
     Getting a required book
 
-New Book
+New Book order
     [Documentation]     This keyword is used to order a new book
     [Tags]      Regression  smoke
     Create New Book_Order
+
+Details of orders
+    [Documentation]     This keyword is used to get details of all the ordered books
+    [Tags]      Regression
+    Get All ordered books details
+
+Details of specific order
+    [Documentation]     This keyword is used to get details of a specific order
+    [Tags]  Regression
+    Get a single or specific order
 
 *** Keywords ***
 Initial Setup

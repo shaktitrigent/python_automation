@@ -1,4 +1,6 @@
 import random
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 import urllib3
 urllib3.disable_warnings()
 
@@ -57,3 +59,20 @@ def get_single_book_id():
     """
     specific_book_id = int(input("Enter a book Id: "))
     return specific_book_id
+
+
+def google_sheets():
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets",
+             "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name("C:/Users/keerthana_a/PycharmProjects/automation_python"
+                                                             "/python_automation/Library/creds.json", scope)
+    client = gspread.authorize(creds)
+    sheet = client.open("TestAutomationData")
+    worksheet = sheet.sheet1
+    values = worksheet.get_all_records()
+    return values
+
+
+def get_data():
+    data = get_user_id() - 1
+    return data
