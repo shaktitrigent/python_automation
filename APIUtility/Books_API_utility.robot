@@ -46,9 +46,8 @@ Ordering the required book
     # creating the dictionary
      &{req_body}=   Create Dictionary   bookId=${bookId}    clientName=${User_name}
      &{header}=     Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
-
      # Making post request
-     ${response}    POST on session     url     orders      json=${req_body}    headers=${header}
+     ${response}    POST on Session      url     orders      json=${req_body}    headers=${header}
      log      ${response.json()}
 
      #convert to string to status code
@@ -60,6 +59,10 @@ Ordering the required book
      ${headers_validation}      Get from Dictionary     ${response.headers}     Content-Type
      should be equal    ${headers_validation}      application/json; charset=utf-8
 
+     # Here we created the suite variable for accessing the OrderId
+     ${order_ID}       get from Dictionary     ${response.json()}    orderId
+     set suite variable     ${order_ID}
+     log to console     ${order_ID}
 
 Create Book order
     TRY
@@ -68,7 +71,7 @@ Create Book order
        log to console   ${BookId}
 
     END
-#
+
 Get all books details
     [Tags]      API
     [Documentation]     This keyword is used to get details of all the books
@@ -139,43 +142,6 @@ Getting a required book
             log to console  Enter a valid Book Id
         END
 
-Ordering New Book
-    [Documentation]     This Keyword is used to order New book
-    [Tags]  API
-    ${New_Book_Id}      get_user_id
-    ${New_username}     get_user_name
-    set suite variable      ${New_Book_Id}
-
-    IF  ${New_Book_Id}==2
-        log to console      Out of stock for this BookId
-    ELSE IF   ${New_Book_Id}>6
-        log to console      Enter valid BookId, entered BookId:
-    ELSE
-        log to console      Book is Ordered
-
-    END
-
-    &{req_body}     Create Dictionary   bookId=${New_Book_Id}   clientName=${New_username}
-    &{header}       Create Dictionary    Content-Type=application/json   Authorization=Bearer ${token}
-    ${response}     POST on session     url     orders      json=${req_body}    headers=${header}
-    log     ${response.json()}
-
-    ${Order_ID}      get from dictionary     ${response.json()}    orderId
-    log     ${Order_ID}
-    set suite variable      ${Order_ID}
-
-    should be equal as strings      ${response.status_code}     201
-    should contain      '${response.status_code}'   20  Fail    Test Failed:Expected Response 201, got  for Ordering New Book
-    should contain       '${response.json()}'   True
-
-Create New Book_Order
-    TRY
-        Ordering New Book
-    EXCEPT
-        log to console      ${New_Book_Id}
-
-    END
-
 Get All ordered books details
     [Documentation]     This keyword is used to get details of all the ordered books
     [Tags]      API
@@ -197,7 +163,7 @@ Get a single or specific order
     log to console  ${values}
     ${list_index}   get_data
     &{header}   Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
-    ${response}     Get on session      url     orders/${Order_ID}     headers=${header}
+    ${response}     Get on session      url     orders/${order_ID}    headers=${header}
     log to console      ${response}
     log to console       ${response.json()}
     log to console      ${response.status_code}
@@ -208,3 +174,19 @@ Get a single or specific order
     ${list_values}  get from list   ${values}   ${list_index}
     log to console  ${list_values}
     should be equal as strings   ${response.json()}[bookId]     ${list_values}[id]
+
+Delete an order
+    [Documentation]  this keyword used to deleting the user ordered book
+    [Tags]   API
+
+    # Making DELETE request
+    &{header}=     Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}    DELETE on session     url     orders/${order_ID}       headers=${header}
+
+     # Validation of Content-Type of headers using get from dictionary metthod
+    ${headers_validation}      Get from Dictionary     ${response.headers}     Connection
+    should be equal    ${headers_validation}      keep-alive
+    log     ${response.headers}
+
+    # Validating the status code
+    should be equal as strings   ${response.status_code}   204
