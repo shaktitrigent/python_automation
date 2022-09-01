@@ -93,7 +93,7 @@ Get only fiction books
     Should be equal as strings  ${response.status_code}   200
     should contain      '${response.content}'   fiction
     should not contain   '${response.content}'  non-fiction
-    log to console   ${response.json()}
+    log    ${response.json()}
 
 Get only non-fiction books
     [Tags]      API
@@ -106,7 +106,7 @@ Get only non-fiction books
     Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,got ${response.status_code} for Get all books details
     Should be equal as strings  ${response.status_code}   200
     should contain   '${response.content}'  non-fiction
-    log to console   ${response.json()}
+    log    ${response.json()}
 
 Required book
     [Documentation]  This keyword is used for  getting a specific book
@@ -130,7 +130,7 @@ Required book
     should contain  ${response.json()}  current-stock
 
 Getting a required book
-        [Documentation]  This keyword logs the perticular book details
+        [Documentation]  This keyword logs the particular book details
 ...        if 'Getting a required book' keyword fails it will give a certain message
 
         TRY
@@ -138,3 +138,40 @@ Getting a required book
         EXCEPT
             log to console  Enter a valid Book Id
         END
+
+Ordering New Book
+    [Documentation]     This Keyword is used to order New book
+    [Tags]  API
+    ${New_Book_Id}      get_user_id
+    ${New_username}     get_user_name
+    set suite variable      ${New_Book_Id}
+
+    IF  ${New_Book_Id}==2
+        log to console      Out of stock for this BookId
+    ELSE IF   ${New_Book_Id}>6
+        log to console      Enter valid BookId, entered BookId:
+    ELSE
+        log to console      Book is Ordered
+
+    END
+
+    &{req_body}     Create Dictionary   bookId=${New_Book_Id}   clientName=${New_username}
+    &{header}       Create Dictionary    Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}     POST on session     url     orders      json=${req_body}    headers=${header}
+    log     ${response.json()}
+
+    ${OrderId}      get from dictionary     ${response.json()}    orderId
+    log     ${OrderId}
+    set suite variable      ${OrderId}
+
+    should be equal as strings      ${response.status_code}     201
+    should contain      '${response.status_code}'   20  Fail    Test Failed:Expected Response 201, got  for Ordering New Book
+    should contain       '${response.json()}'   True
+
+Create New Book_Order
+    TRY
+        Ordering New Book
+    EXCEPT
+        log to console      ${New_Book_Id}
+
+    END
