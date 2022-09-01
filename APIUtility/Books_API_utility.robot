@@ -164,8 +164,6 @@ Get All ordered books details
 Get a single or specific order
     [Documentation]  This keyword is used to get details of specific order
     [Tags]      API
-    @{values}   get_googlesheets_data
-    log  ${values}
     ${list_index}   get_data
     &{header}   Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
     ${response}     Get on session      url     orders/${order_ID}    headers=${header}
@@ -175,8 +173,8 @@ Get a single or specific order
     should contain      '${response.status_code}'   20    Test Failed: Expected Response 200,
     ...                                            got ${response.status_code} for get a single or specific order
 
-    ${list_values}  get from list   ${values}   ${list_index}
-    should be equal as strings   ${response.json()}[bookId]     ${list_values}[id]
+    ${list_values}  get from list   ${googlesheets}   ${list_index}
+    should be equal as strings   ${response.json()}[bookId]      ${list_values}[id]
 
 Update an order
     [Documentation]  This keyword modifies the ordered data

@@ -4,7 +4,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 import urllib3
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
 urllib3.disable_warnings()
 
 
@@ -55,6 +54,7 @@ def get_user_id():
     book_number = int(input("enter the bookId: "))
     return book_number
 
+
 def get_user_name():
     """
     Create userName using the input methods
@@ -81,6 +81,7 @@ def get_single_book_id():
     specific_book_id = int(input("Enter a book Id: "))
     return specific_book_id
 
+
 def get_data():
     """
      This function is used to get the specific value of bookId
@@ -90,6 +91,7 @@ def get_data():
     data = get_user_id() - 1
     return data
 
+
 def update_name():
     """
     This function gives user input name, i.e., updated name for the
@@ -98,3 +100,12 @@ def update_name():
     """
     customer_name_updated = input("Enter the customer name: ")
     return customer_name_updated
+
+def google_sheets_data():
+    """
+    This function used to getting the specific value of bookId
+    which is validate with the Google sheet data
+    :return:
+    """
+    id_data = get_user_id() - 1
+    return id_data
