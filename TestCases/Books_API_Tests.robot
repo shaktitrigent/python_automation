@@ -40,7 +40,7 @@ Specific book details
 New Book order
     [Documentation]     This keyword is used to order a new book
     [Tags]      Regression  smoke
-    Create New Book_Order
+    Create Book order
 
 Details of orders
     [Documentation]     This keyword is used to get details of all the ordered books
@@ -54,6 +54,15 @@ Details of specific order
 
 delete the given BookId
     [Documentation]  This Testcase is used for deleting the ordered book details
+
+    [Tags]     sanity   Regression
+    Delete an order
+
+checking the order deleted or not
+    [Documentation]  This TestCase used to check whether order is delete
+    [Tags]      Smoke   Regression
+    checking the order deleted or not
+
     [Tags]     sanity   Regrassion
     Delete an order
 
