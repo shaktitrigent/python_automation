@@ -59,10 +59,18 @@ Ordering the required book
      ${headers_validation}      Get from Dictionary     ${response.headers}     Content-Type
      should be equal    ${headers_validation}      application/json; charset=utf-8
 
+<<<<<<< HEAD
      # Here we created the suite variable for accessing the OrderId
      ${order_ID}       get from Dictionary     ${response.json()}    orderId
      set suite variable     ${order_ID}
      log to console     ${order_ID}
+=======
+    # getting an order id
+    ${orderId}  get from dictionary  ${response.json()}  orderId
+    log  ${orderId}
+    set suite variable  ${orderId}
+
+>>>>>>> f9926d7 (PA-16 Update an order)
 
 Create Book order
     TRY
@@ -218,3 +226,14 @@ checking the order deleted or not
 
     # Validating the status_code
     should be equal as strings   ${response.status_code}   200
+
+Update an order
+    [Documentation]  This keyword modifies the ordered data
+    ${customer_name}  update_name
+    &{req_body}    create dictionary    customerName=${customer_name}
+    &{header}   create dictionary   Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}     PATCH On Session   url   /orders/${orderId}     json=${req_body}    headers=${header}
+    log   ${response}
+
+#    validations
+    should be equal as strings   ${response.status_code}   204
