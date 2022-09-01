@@ -77,13 +77,17 @@ Get all books details
     [Documentation]     This keyword is used to get details of all the books
     &{header}=      Create Dictionary       Content-Type=application/json
     ${response}=  Get On Session    url     books   headers=${header}
-    log     ${response.status_code}
-    log  ${response.json()}
+
+    # Getting the google sheets data using python function and validating the response data
+    ${googlesheets}     get_googlesheets_data
+    log    ${response.status_code}
     Should Contain      '${response.status_code}'    20    Fail    Test Failed: Expected Response  200,
 ...                                                 got ${response.status_code} for Get all books details
     Should be equal as strings  ${response.status_code}   200
     should contain  '${response.json()}'    id
     should contain  '${response.json()}'    name
+    # validating the Spread sheets response and return  the List of dictionaries
+    should not be equal as strings    ${response.json()}[${bookId}]        ${googlesheets}[3]
 
 Get only fiction books
     [Tags]      API
@@ -203,6 +207,7 @@ checking the order deleted or not
     # Making the GET request and checking the deleted order
     &{header}=     Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
     ${response}     GET on session      url     orders      headers=${header}
+    # It retruns the empty content because after delete an order it gives empty body
     log to console      ${response.json()}
 
     # Validating the headers content

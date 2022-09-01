@@ -2,8 +2,29 @@ import random
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import urllib3
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 urllib3.disable_warnings()
+
+
+def get_googlesheets_data():
+    """
+    This keyword is used to get the GoogleSheets data from the  spreadsheets
+    :return: It returns the list of dictionaries
+    """
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets",
+             "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
+
+    creds = ServiceAccountCredentials.from_json_keyfile_name(
+            'C:/Users/sunil_n/PycharmProjects/python-automation-robot/python_automation/Library/creds.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open('TestAutomationData')
+    worksheet = sheet.sheet1
+
+    # Returns the  list of dictionaries
+    get_values = worksheet.get_all_records()
+    return get_values
 
 
 def get_random_number(start, end):

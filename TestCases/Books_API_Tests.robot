@@ -34,7 +34,7 @@ list of only non-fiction books
 
 Specific book details
     [Documentation]  This keyword retrieves the detailed information about a book.
-    [Tags]  Smoke Regression
+    [Tags]  Smoke    Regression
     Getting a required book
 
 New Book order
@@ -54,7 +54,6 @@ Details of specific order
 
 delete the given BookId
     [Documentation]  This Testcase is used for deleting the ordered book details
-
     [Tags]     sanity   Regression
     Delete an order
 
@@ -62,9 +61,6 @@ checking the order deleted or not
     [Documentation]  This TestCase used to check whether order is delete
     [Tags]      Smoke   Regression
     checking the order deleted or not
-
-    [Tags]     sanity   Regrassion
-    Delete an order
 
 *** Keywords ***
 Initial Setup
