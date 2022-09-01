@@ -58,19 +58,15 @@ Ordering the required book
      # Validation of Content-Type of headers using get from dictionary metthod
      ${headers_validation}      Get from Dictionary     ${response.headers}     Content-Type
      should be equal    ${headers_validation}      application/json; charset=utf-8
-
-<<<<<<< HEAD
      # Here we created the suite variable for accessing the OrderId
      ${order_ID}       get from Dictionary     ${response.json()}    orderId
      set suite variable     ${order_ID}
      log to console     ${order_ID}
-=======
+
     # getting an order id
     ${orderId}  get from dictionary  ${response.json()}  orderId
     log  ${orderId}
     set suite variable  ${orderId}
-
->>>>>>> f9926d7 (PA-16 Update an order)
 
 Create Book order
     TRY
@@ -174,7 +170,7 @@ Get All ordered books details
 Get a single or specific order
     [Documentation]  This keyword is used to get details of specific order
     [Tags]      API
-    @{values}   google_sheets
+    @{values}   get_googlesheets_data
     log to console  ${values}
     ${list_index}   get_data
     &{header}   Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
@@ -189,6 +185,17 @@ Get a single or specific order
     ${list_values}  get from list   ${values}   ${list_index}
     log to console  ${list_values}
     should be equal as strings   ${response.json()}[bookId]     ${list_values}[id]
+
+Update an order
+    [Documentation]  This keyword modifies the ordered data
+    ${customer_name}  update_name
+    &{req_body}    create dictionary    customerName=${customer_name}
+    &{header}   create dictionary   Content-Type=application/json   Authorization=Bearer ${token}
+    ${response}     PATCH On Session   url   /orders/${orderId}     json=${req_body}    headers=${header}
+    log   ${response}
+
+#    validations
+    should be equal as strings   ${response.status_code}   204
 
 Delete an order
     [Documentation]  this keyword used to deleting the user ordered book
@@ -217,23 +224,24 @@ checking the order deleted or not
     ${response}     GET on session      url     orders      headers=${header}
     # It retruns the empty content because after delete an order it gives empty body
     log to console      ${response.json()}
-
-    # Validating the headers content
-    ${validation}      Get from Dictionary     ${response.headers}     Content-Length
-    should be equal     ${validation}       2
     ${headers_validation}      Get from Dictionary     ${response.headers}     Connection
     should be equal    ${headers_validation}      keep-alive
 
     # Validating the status_code
     should be equal as strings   ${response.status_code}   200
 
-Update an order
-    [Documentation]  This keyword modifies the ordered data
-    ${customer_name}  update_name
-    &{req_body}    create dictionary    customerName=${customer_name}
+Check whether the order is updated or not
+    [Documentation]  This keyword verifies order is updated or not
     &{header}   create dictionary   Content-Type=application/json   Authorization=Bearer ${token}
-    ${response}     PATCH On Session   url   /orders/${orderId}     json=${req_body}    headers=${header}
-    log   ${response}
+    ${response}   GET On Session  url   /orders/${orderId}        headers=${header}
+    log  ${response.json()}
+    log  ${response.status_code}
 
 #    validations
-    should be equal as strings   ${response.status_code}   204
+    should be equal as integers  ${response.status_code}    200
+    should contain  ${response.json()}  createdBy
+    should contain  ${response.json()}  id
+    should contain  ${response.json()}  bookId
+    should contain  ${response.json()}  customerName
+    should contain  ${response.json()}  quantity
+    should contain  ${response.json()}  timestamp
