@@ -136,7 +136,6 @@ Required book
     END
 
     should be equal as strings   ${response.status_code}   200
-    should not be equal as strings    ${response.json()}[bookId]      ${googlesheets}[3]
 
 Getting a required book
         [Documentation]  This keyword logs the particular book details
