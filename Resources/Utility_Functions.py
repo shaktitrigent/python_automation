@@ -2,6 +2,7 @@ import random
 import urllib3
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from Function import change_path
 
 urllib3.disable_warnings()
 
@@ -14,8 +15,7 @@ def get_googlesheets_data():
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets",
              "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        'C:/Users/sunil_n/PycharmProjects/python-automation-robot/python_automation/creds.json', scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(change_path(), scope)
     client = gspread.authorize(creds)
     sheet = client.open('TestAutomationData')
     worksheet = sheet.sheet1
