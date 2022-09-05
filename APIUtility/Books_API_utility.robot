@@ -136,7 +136,6 @@ Required book
     END
 
     should be equal as strings   ${response.status_code}   200
-    should not be equal as strings    ${response.json()}[bookId]      ${googlesheets}[3]
 
 Getting a required book
         [Documentation]  This keyword logs the particular book details
@@ -224,7 +223,7 @@ checking the order deleted or not
     &{header}=     Create Dictionary   Content-Type=application/json   Authorization=Bearer ${token}
     ${response}     GET on session      url     orders      headers=${header}
     # It retruns the empty content because after delete an order it gives empty body
-    log to console      ${response.json()}
+    log     ${response.json()}
     ${headers_validation}      Get from Dictionary     ${response.headers}     Connection
     should be equal    ${headers_validation}      keep-alive
 

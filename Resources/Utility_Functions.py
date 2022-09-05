@@ -1,9 +1,9 @@
 import random
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 import urllib3
+import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+
 urllib3.disable_warnings()
 
 
@@ -15,12 +15,10 @@ def get_googlesheets_data():
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets",
              "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        'C:/Users/mohan_h/Desktop/Python-Automation/api_books/python_automation/creds.json', scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(os.path.join(os.getcwd()) + '\\creds.json', scope)
     client = gspread.authorize(creds)
     sheet = client.open('TestAutomationData')
     worksheet = sheet.sheet1
-
     # Returns the  list of dictionaries
     get_values = worksheet.get_all_records()
     return get_values
@@ -100,12 +98,3 @@ def update_name():
     """
     customer_name_updated = input("Enter the customer name: ")
     return customer_name_updated
-
-def google_sheets_data():
-    """
-    This function used to getting the specific value of bookId
-    which is validate with the Google sheet data
-    :return:
-    """
-    id_data = get_user_id() - 1
-    return id_data
