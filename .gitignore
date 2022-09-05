@@ -130,6 +130,3 @@ dmypy.json
 
 #json data
 creds.json
-
-# reference path
-Resources/Function.py
