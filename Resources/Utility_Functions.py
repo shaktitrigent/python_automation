@@ -6,9 +6,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 urllib3.disable_warnings()
 
-a = os.path.join(os.getcwd()) + "\\creds.json"
-print(a)
-
 
 def get_googlesheets_data():
     """
